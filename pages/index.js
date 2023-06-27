@@ -1,118 +1,236 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+'use client'
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import axios from "axios";
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { Switch } from '@headlessui/react'
 
-const inter = Inter({ subsets: ['latin'] })
+const links = [
+  { name: "Login", href: "/login/" },
+  { name: "Register", href: "/register" },
+  
+];
+const stats = [
+  { name: "Verified Notes", value: "100+" },
+  { name: "College Sample Paper", value: "300+" },
+  { name: "Active Users", value: "1000+" },
+  { name: "Earning for Helpers", value: "Unlimited" },
+];
 
 export default function Home() {
+ 
+  const [user, setUser] = useState();
+  const [token, setToken] = useState();
+  const getuser = async () => {
+    
+    const res = await axios.get('http://localhost:5000/result', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    setUser(res.data);
+    
+
+  };
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setToken(localStorage.getItem('token'));
+    }
+  }, []);
+
+
+
+
+  
+  useEffect(() => {
+  
+    if(token){
+      getuser();
+    }
+   
+  }, [token]);
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <>
+  {token?
+    <>
+    <Navbar user={user}/>
+  
+  
+      </>:
+      <>
+      <div className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
+        <img
+          src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-y=.8&w=2830&h=1500&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
+          alt=""
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center"
+        />
+        <div
+          className="hidden sm:absolute sm:-top-10 sm:right-1/2 sm:-z-10 sm:mr-10 sm:block sm:transform-gpu sm:blur-3xl"
+          aria-hidden="true"
+        >
+          <div
+            className="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20"
+            style={{
+              clipPath:
+                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+            }}
+          />
+        </div>
+        <div
+          className="absolute -top-52 left-1/2 -z-10 -translate-x-1/2 transform-gpu blur-3xl sm:top-[-28rem] sm:ml-16 sm:translate-x-0 sm:transform-gpu"
+          aria-hidden="true"
+        >
+          <div
+            className="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20"
+            style={{
+              clipPath:
+                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+            }}
+          />
+        </div>
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:mx-0">
+            <h2 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+              Students Helper
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-gray-300">
+             Your all new portal to get ready for college exams, placements, and career guidance.
+            </p>
+          </div>
+          <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
+              {links.map((link) => (
+                <Link key={link.name} href={link.href}>
+                  <div class="border border-spacing-1 rounded-md p-1">
+                  {link.name} <span aria-hidden="true">&rarr;</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
+              {stats.map((stat) => (
+                <div key={stat.name} className="flex flex-col-reverse">
+                  <dt className="text-base leading-7 text-gray-300">
+                    {stat.name}
+                  </dt>
+                  <dd className="text-2xl font-bold leading-9 tracking-tight text-white">
+                    {stat.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </div>
+ {/* contact section */}
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+ <div>
+
+       
+ <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+      <div
+        className="absolute inset-x-0  -z-10 transform-gpu overflow-hidden blur-3xl"
+        aria-hidden="true"
+      >
+        <div
+          className="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]"
+          style={{
+            clipPath:
+              'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+          }}
         />
       </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className="mx-auto max-w-2xl text-center">
+        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contact Us</h2>
+        <p className="mt-2 text-lg leading-8 text-gray-600">
+          For any query, Feel free to contact Us
+        </p>
       </div>
-    </main>
+      <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+          <div>
+            <label htmlFor="first-name" className="block text-sm font-semibold leading-6 text-gray-900">
+              First name
+            </label>
+            <div className="mt-2.5">
+              <input
+                type="text"
+                name="first-name"
+                id="first-name"
+                autoComplete="given-name"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div>
+            <label htmlFor="last-name" className="block text-sm font-semibold leading-6 text-gray-900">
+              Last name
+            </label>
+            <div className="mt-2.5">
+              <input
+                type="text"
+                name="last-name"
+                id="last-name"
+                autoComplete="family-name"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+         
+          <div className="sm:col-span-2">
+            <label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900">
+              Email
+            </label>
+            <div className="mt-2.5">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                autoComplete="email"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          
+          <div className="sm:col-span-2">
+            <label htmlFor="message" className="block text-sm font-semibold leading-6 text-gray-900">
+              Message
+            </label>
+            <div className="mt-2.5">
+              <textarea
+                name="message"
+                id="message"
+                rows={4}
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                defaultValue={''}
+              />
+            </div>
+          </div>
+         
+        </div>
+        <div className="mt-10">
+          <button
+            type="submit"
+            className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Let's talk
+          </button>
+        </div>
+      </form>
+    </div>
+ </div>
+
+
+  
+
+     </>
+    
+              }
+    </>
+              
   )
 }
+
