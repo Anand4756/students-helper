@@ -135,7 +135,7 @@ export default function Navbar({user}) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="bg-white">
+    <div className="bg-white z-10">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -175,7 +175,7 @@ export default function Navbar({user}) {
 
                 {/* Links */}
                 <Tab.Group as="div" className="mt-2">
-                  <div className="border-b border-gray-200">
+                  <div className="border-b z-20 border-gray-200">
                     <Tab.List className="-mb-px flex space-x-8 px-4">
                       {navigation.categories.map((category) => (
                         <Tab
@@ -194,7 +194,7 @@ export default function Navbar({user}) {
                   </div>
                   <Tab.Panels as={Fragment}>
                     {navigation.categories.map((category) => (
-                      <Tab.Panel key={category.name} className="space-y-10 px-4 pb-8 pt-10">
+                      <Tab.Panel key={category.name} className="space-y-10 z-20 px-4 pb-8 pt-10">
                         <div className="grid grid-cols-2 gap-x-4">
                           {category.featured.map((item) => (
                             <div key={item.name} className="group relative text-sm">
@@ -247,15 +247,15 @@ export default function Navbar({user}) {
                 </div>
 
 
-            
+
               </Dialog.Panel>
             </Transition.Child>
           </div>
         </Dialog>
       </Transition.Root>
 
-      <header className="relative bg-white">
-        
+      <header className="relative bg-white z-50">
+
         <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
@@ -315,7 +315,7 @@ export default function Navbar({user}) {
 
                               <div className="relative bg-white">
                                 <div className="mx-auto max-w-7xl px-8">
-                                  <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
+                                  <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16 z-20">
                                     <div className="col-start-2 grid grid-cols-2 gap-x-8">
                                       {category.featured.map((item) => (
                                         <div key={item.name} className="group relative text-base sm:text-sm">
@@ -380,11 +380,11 @@ export default function Navbar({user}) {
                 </div>
               </Popover.Group>
     {/* right side */}
-   
+
               <div className="absolute inset-y-0 w-5/6 flex justify-end items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <div class="relative mx-5">
   <input type="text" class="px-4 py-2 border  text-black border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 w-full" placeholder="Search..." />
- 
+
 </div>
 
                 <button
@@ -451,23 +451,23 @@ export default function Navbar({user}) {
                   </Transition>
                 </Menu>
               </div>
-          
-            
+
+
             </div>
-            
+
           </div>
         </nav>
         </header>
-    
 
 
-          
-          
 
-         
-        
-      
-      
+
+
+
+
+
+
+
     </div>
   )
 }

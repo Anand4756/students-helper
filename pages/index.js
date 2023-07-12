@@ -49,13 +49,16 @@ export default function Home() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
-  useEffect(() => {
-    setToken(localStorage.getItem("token"));
-  }, []);
+  // useEffect(() => {
+  //   setToken(localStorage.getItem("token"));
+  // }, []);
 
   useEffect(() => {
-    if (token) {
+    setToken(localStorage.getItem("token"));
+    if(token){
       getuser(token);
+
+
     }
   }, [token]);
   const getuser = async (token) => {
