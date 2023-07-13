@@ -31,6 +31,7 @@ export default function CenterMenu() {
       imageSrc={card.cloudinaryUrl}
       title={card.title}
       description={card.description}
+      postowner={card.user}
     />
   )):"No new post"}
 

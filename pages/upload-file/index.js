@@ -25,7 +25,11 @@ export default function UploadFile() {
 
 
         try {
-          const response = await axios.post('http://localhost:5000/material-upload', formData);
+          const response = await axios.post('http://localhost:5000/material-upload', formData, {headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "content-type": "multipart/form-data",
+        }});
+
           console.log('File uploaded:', response.data);
           alert(response.data.success)
           // Handle the successful file upload
